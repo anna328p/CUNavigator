@@ -2,15 +2,18 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
+    alias(libs.plugins.org.jetbrains.kotlin.plugin.serialization)
+
+    alias(libs.plugins.com.google.devtools.ksp)
+    alias(libs.plugins.com.google.dagger.hilt.android)
 }
 
 android {
-    namespace = "dev.ap5.mtdnavigator"
+    namespace = "dev.ap5.cunavigator"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "dev.ap5.mtdnavigator"
+        applicationId = "dev.ap5.cunavigator"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
@@ -39,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     packaging {
         resources {
@@ -56,7 +59,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
@@ -73,22 +75,33 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
+    implementation(libs.kotlinx.datetime)
+
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    ksp(libs.room.compiler)
+
+    // Kotlin serialization
+    implementation(libs.kotlinx.serialization.json)
+
+    // HTTP client
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
     // Retrofit
     implementation(libs.retrofit)
     // Retrofit with Scalar Converter
     implementation(libs.converter.scalars)
-
-    // Kotlin serialization
-    implementation(libs.kotlinx.serialization.json)
     // Retrofit with Kotlin serialization Converter
     implementation(libs.retrofit2.kotlinx.serialization.converter)
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
 
-    // Compose Navigation
+    // Compose
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    implementation(libs.kotlinx.datetime)
-
+    // Reflection
     implementation(kotlin("reflect"))
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 }
