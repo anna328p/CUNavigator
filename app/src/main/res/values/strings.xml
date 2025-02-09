@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CU Navigator</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_map">Map</string>
+    <string name="tab_navigate">Navigate</string>
+    <string name="tab_saved">Saved</string>
+    <string name="favorite_stops">Favorite stops</string>
+    <string name="nearby_stops">Nearby stops</string>
+    <string name="global_search_hint">Search stops and routes</string>
 </resources>

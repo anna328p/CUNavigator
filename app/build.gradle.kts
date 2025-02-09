@@ -6,16 +6,22 @@ plugins {
 
     alias(libs.plugins.com.google.devtools.ksp)
     alias(libs.plugins.com.google.dagger.hilt.android)
+    alias(libs.plugins.androidx.room)
+
+    alias(libs.plugins.org.jetbrains.kotlin.plugin.compose)
+
+    id(libs.plugins.secretsGradlePlugin.get().pluginId)
+    id(libs.plugins.androidx.navigation.safeargs.kotlin.get().pluginId)
 }
 
 android {
     namespace = "dev.ap5.cunavigator"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "dev.ap5.cunavigator"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -31,24 +37,33 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
+
+        freeCompilerArgs += "-Xwhen-guards"
     }
+
     buildFeatures {
+        buildConfig = true
         compose = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.8"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
     sourceSets {
         getByName("main") {
             java {
@@ -56,52 +71,74 @@ android {
             }
         }
     }
+
+    ksp {
+        arg("room.generateKotlin", "true")
+    }
+}
+
+secrets {
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = "local.defaults.properties"
+    ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
+}
+
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {
-    implementation(libs.core.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.activity.compose)
-    implementation(platform(libs.compose.bom))
-    implementation(libs.ui)
-    implementation(libs.ui.graphics)
-    implementation(libs.ui.tooling.preview)
-    implementation(libs.material3)
+    implementation(libs.kotlin.metadata.jvm)
+
+    implementation(libs.ax.core.ktx)
+    implementation(libs.ax.lifecycle.runtime.ktx)
+    implementation(libs.ax.activity.compose)
+    implementation(platform(libs.ax.compose.bom))
+    implementation(libs.ax.compose.ui)
+    implementation(libs.ax.compose.ui.graphics)
+    implementation(libs.ax.compose.ui.tooling.preview)
+    implementation(libs.ax.compose.material3.android)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.ui.test.junit4)
-    debugImplementation(libs.ui.tooling)
-    debugImplementation(libs.ui.test.manifest)
+    androidTestImplementation(libs.ax.test.ext.junit)
+    androidTestImplementation(libs.ax.test.espresso.core)
+    androidTestImplementation(platform(libs.ax.compose.bom))
+    androidTestImplementation(libs.ax.compose.ui.test.junit4)
+    debugImplementation(libs.ax.compose.ui.tooling)
+    debugImplementation(libs.ax.compose.ui.test.manifest)
 
-    implementation(libs.kotlinx.datetime)
+    implementation(libs.ktx.datetime)
 
-    implementation(libs.room.runtime)
-    annotationProcessor(libs.room.compiler)
-    ksp(libs.room.compiler)
+    implementation(libs.ax.room.ktx)
+    ksp(libs.ax.room.compiler)
+
+    implementation(project(":mtdapi"))
 
     // Kotlin serialization
-    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.ktx.serialization.json)
 
-    // HTTP client
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
-
-    // Retrofit
-    implementation(libs.retrofit)
-    // Retrofit with Scalar Converter
-    implementation(libs.converter.scalars)
-    // Retrofit with Kotlin serialization Converter
-    implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.ktorfit)
+    implementation(libs.ktor.serialization.ktx.json)
+    implementation(libs.ktor.client.contentNegotiation)
+    implementation(libs.ktor.client.okhttp)
 
     // Compose
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.ax.navigation.compose)
+    implementation(libs.ax.lifecycle.viewmodel.compose)
 
     // Reflection
     implementation(kotlin("reflect"))
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    implementation(libs.dagger.hilt.android)
+    ksp(libs.dagger.hilt.android.compiler)
+
+    implementation(libs.gms.playServices.maps)
+    implementation(libs.maps.ktx)
+    implementation(libs.maps.compose)
+    implementation(libs.maps.compose.utils)
+    implementation(libs.maps.compose.widgets)
+
+    implementation(libs.ax.compose.material.icons.extended)
+
+    implementation(libs.colormath)
 }
