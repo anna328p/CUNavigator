@@ -1,4 +1,4 @@
-package dev.ap5.cunavigator.data.cache
+package dev.ap5.cunavigator.data.mtdRestRepository.cache
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

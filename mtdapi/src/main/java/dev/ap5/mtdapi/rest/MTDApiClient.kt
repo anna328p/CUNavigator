@@ -40,7 +40,7 @@ class MTDApiClient(apiKey: String) : MTDApi by buildClient(apiKey) {
                 }
 
                 install(ContentNegotiation) { json() }
-                install(Logging)
+                // install(Logging)
                 install(HttpCache)
             }
         }

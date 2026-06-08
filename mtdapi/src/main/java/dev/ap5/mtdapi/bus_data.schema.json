@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+
+  "$id": "https://cunavigator.ap5.dev/schemas/bus_data",
+
+  "title": "Bus data",
+  "type": "object",
+
+  "required": [
+    "manufacturers",
+    "drivetrains",
+    "models",
+    "features",
+    "ranges"
+  ],
+
+  "properties": {
+    "manufacturers": {
+      "type": "object",
+
+      "additionalProperties": {
+        "type": "object",
+        "required": ["name", "url"],
+
+        "properties": {
+          "name": {"type": "string"},
+          "url": {"type": "string", "format": "uri"}
+        }
+      }
+    },
+
+    "drivetrains": {
+      "type": "object",
+
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+
+    "models": {
+      "type": "object",
+
+      "additionalProperties": {
+        "type": "object",
+        "required": ["mfg", "length", "articulated", "drivetrain"],
+
+        "properties": {
+          "mfg": {"type": "string"},
+          "length": {"type": "integer", "minimum": 0},
+          "articulated": {"type": "boolean"},
+          "drivetrain": {"type": "string"}
+        }
+      }
+    },
+
+    "features": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["start_year"],
+
+        "properties": {
+          "start_year": {"$ref": "#/$defs/year"},
+          "end_year": {"$ref": "#/$defs/year"}
+        }
+      }
+    },
+
+    "ranges": {
+      "type": "array",
+
+      "items": {
+        "type": "object",
+        "required": ["start", "end", "mfg", "model", "build_year"],
+
+        "properties": {
+          "start": {"$ref": "#/$defs/fleet_number"},
+          "end": {"$ref": "#/$defs/fleet_number"},
+          "mfg": {"type": "string"},
+          "model": {"type": "string"},
+          "build_year": {"$ref": "#/$defs/year"}
+        }
+      }
+    }
+  },
+
+  "wraps": {
+    "type": "array",
+
+    "items": {
+      "type": "object",
+      "required": [ "fleet_number", "name" ],
+
+      "properties": {
+        "fleet_number": {"$ref": "#/$defs/fleet_number"},
+        "name": {"type": "string"},
+        "image_uri": {"type": "string", "format": "uri"}
+      }
+    }
+  },
+
+  "$defs": {
+    "fleet_number": {
+      "type": "string",
+      "pattern": "^[0-9]{4}$"
+    },
+    "year": {
+      "type": "integer",
+      "minimum": 1900,
+      "maximum": 2100
+    }
+  }
+}

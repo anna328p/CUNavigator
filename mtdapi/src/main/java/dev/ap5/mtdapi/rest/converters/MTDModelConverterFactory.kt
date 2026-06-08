@@ -29,7 +29,7 @@ class MTDModelConverterFactory : Converter.Factory {
         crossinline getFromBody : (MTDResponseBody) -> List<T>?
     ) : ConverterTo<MApiResult<List<T>>> {
 
-        return object : dev.ap5.mtdapi.rest.converters.ConverterTo<MApiResult<List<T>>> {
+        return object : ConverterTo<MApiResult<List<T>>> {
 
             override suspend fun convert(result: KtorfitResult): MApiResult<List<T>> {
 
@@ -54,7 +54,6 @@ class MTDModelConverterFactory : Converter.Factory {
         return object : dev.ap5.mtdapi.rest.converters.ConverterTo<MApiResult<T>> {
 
             override suspend fun convert(result: KtorfitResult): MApiResult<T> {
-
                 return when (val prev = conv.convert(result)) {
                     is MResult.NotModified -> prev
                     is MResult.Err         -> prev

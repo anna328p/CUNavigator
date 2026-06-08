@@ -9,28 +9,9 @@ import kotlinx.datetime.format.char
 
 fun main() {
     runBlocking {
-        val mtd = MTDApiClient.buildClient("REDACTED_MTD_API_KEY")
-        /*
-        val res = mtd.getStops().body()!!.stops!!
-
-        for (stop in res) {
-            println("\n\nStop: ${stop.name} [${stop.id}]")
-
-            for (point in stop.stopPoints) {
-                val re = Regex("""\((.+)\)""")
-
-                val parsed = when (val match = re.find(point.name)) {
-                    null -> point.name
-                    else -> match.groupValues[1]
-                }
-
-                println("Point: ${point.name} [${point.id}] | $parsed")
-                println("(${point.lat}, ${point.lon})\n")
-            }
-        }
-
-
-         */
+        val apiKey = System.getenv("MTD_API_KEY")
+            ?: error("Set the MTD_API_KEY environment variable to run this scratch script")
+        val mtd = MTDApiClient.buildClient(apiKey)
 
         val query = "terminal"
         println("Query: $query")
@@ -42,7 +23,6 @@ fun main() {
             val stopID = stop.id
 
             val stopInfo = mtd.getStop(stopID).unwrap()!!
-            println(stopInfo)
             val points = stopInfo.stopPoints
             val pointsMap = points.associateBy({ it.id }, { it })
 

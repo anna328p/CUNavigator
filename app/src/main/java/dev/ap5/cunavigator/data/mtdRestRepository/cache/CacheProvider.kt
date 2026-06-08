@@ -1,6 +1,4 @@
-package dev.ap5.cunavigator.data.cache
-
-import dev.ap5.cunavigator.data.cache.CacheDatabase
+package dev.ap5.cunavigator.data.mtdRestRepository.cache
 
 interface CacheProvider {
     val service : CacheDatabase

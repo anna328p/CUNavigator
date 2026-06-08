@@ -14,3 +14,12 @@
 .cxx
 local.properties
 /secrets.properties
+
+# Kotlin build cache
+.kotlin/
+
+# GTFS data artifact
+/google_transit.zip
+
+# IDE
+/.idea/AndroidProjectSystem.xml

@@ -1,4 +1,4 @@
-package dev.ap5.cunavigator.data.cache
+package dev.ap5.cunavigator.data.mtdRestRepository.cache
 
 import androidx.room.Dao
 import androidx.room.Query

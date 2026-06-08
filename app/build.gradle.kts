@@ -14,6 +14,13 @@ plugins {
     id(libs.plugins.androidx.navigation.safeargs.kotlin.get().pluginId)
 }
 
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xwhen-guards")
+        extraWarnings.set(true)
+    }
+}
+
 android {
     namespace = "dev.ap5.cunavigator"
     compileSdk = 35
@@ -89,16 +96,25 @@ room {
 }
 
 dependencies {
+    implementation(platform(libs.ax.compose.bom))
+
     implementation(libs.kotlin.metadata.jvm)
 
     implementation(libs.ax.core.ktx)
     implementation(libs.ax.lifecycle.runtime.ktx)
     implementation(libs.ax.activity.compose)
-    implementation(platform(libs.ax.compose.bom))
+
     implementation(libs.ax.compose.ui)
     implementation(libs.ax.compose.ui.graphics)
     implementation(libs.ax.compose.ui.tooling.preview)
     implementation(libs.ax.compose.material3.android)
+
+    // Compose
+    implementation(libs.ax.navigation.compose)
+    implementation(libs.ax.lifecycle.viewmodel.compose)
+
+    implementation(libs.ax.compose.material.icons.extended)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ax.test.ext.junit)
     androidTestImplementation(libs.ax.test.espresso.core)
@@ -109,8 +125,11 @@ dependencies {
 
     implementation(libs.ktx.datetime)
 
-    implementation(libs.ax.room.ktx)
+    implementation(libs.ax.room.runtime)
     ksp(libs.ax.room.compiler)
+    implementation(libs.ax.room.ktx)
+    implementation(libs.ax.sqlite)
+    implementation(libs.ax.sqlite.bundled)
 
     implementation(project(":mtdapi"))
 
@@ -121,10 +140,6 @@ dependencies {
     implementation(libs.ktor.serialization.ktx.json)
     implementation(libs.ktor.client.contentNegotiation)
     implementation(libs.ktor.client.okhttp)
-
-    // Compose
-    implementation(libs.ax.navigation.compose)
-    implementation(libs.ax.lifecycle.viewmodel.compose)
 
     // Reflection
     implementation(kotlin("reflect"))
@@ -137,8 +152,6 @@ dependencies {
     implementation(libs.maps.compose)
     implementation(libs.maps.compose.utils)
     implementation(libs.maps.compose.widgets)
-
-    implementation(libs.ax.compose.material.icons.extended)
 
     implementation(libs.colormath)
 }

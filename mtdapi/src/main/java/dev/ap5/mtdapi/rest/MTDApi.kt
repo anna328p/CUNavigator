@@ -46,7 +46,7 @@ interface MTDApi {
     suspend fun getCalendarDatesByDate(
         @Query("date") date: LocalDate,
         @Query("changeset_id") changesetID: ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ): MApiResult<List<CalendarDate>>
 
     /**
@@ -63,7 +63,7 @@ interface MTDApi {
     suspend fun getCalendarDatesByService(
         @Query("service_id") serviceID : ServiceID,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<CalendarDate>>
 
     // Departures
@@ -107,7 +107,7 @@ interface MTDApi {
         @Query("route_id") routeID : RouteID? = null,
         @Query("pt") previewTime : Int? = null,
         @Query("count") count : Int? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.ephemeral(CacheTTL.REALTIME)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.ephemeral(CacheTTL.REALTIME)
     ) : MApiResult<List<Departure>>
 
     /**
@@ -124,7 +124,7 @@ interface MTDApi {
         @Query("route_id") routeIDs : IDList<RouteID>?,
         @Query("pt") previewTime : Int? = null,
         @Query("count") count : Int? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.ephemeral(CacheTTL.REALTIME)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.ephemeral(CacheTTL.REALTIME)
     ) : MApiResult<List<Departure>>
 
     // Routes
@@ -136,14 +136,12 @@ interface MTDApi {
      *
      * @param id           route ID
      * @param changesetID  changeset ID (see [ChangesetID])
-     *
-     * @return [MTDResponseBody] containing [Route] objects
      */
     @GET("getroute")
     suspend fun getRoute(
         @Query("id") id : RouteID,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<Route>
 
     /**
@@ -151,14 +149,12 @@ interface MTDApi {
      *
      * @param ids          [IDList] of route IDs
      * @param changesetID  changeset ID (see [ChangesetID])
-     *
-     * @return [MTDResponseBody] containing [Route] objects
      */
     @GET("getroute")
     suspend fun getRoute(
         @Query("id") ids : IDList<RouteID>,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<Route>>
 
     /**
@@ -171,7 +167,7 @@ interface MTDApi {
     @GET("getroutes")
     suspend fun getRoutes(
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<Route>>
 
     /**
@@ -187,7 +183,7 @@ interface MTDApi {
     suspend fun getRoutesByStop(
         @Query("stop_id") stopID: StopID,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<Route>>
 
     // Shapes
@@ -213,7 +209,7 @@ interface MTDApi {
     suspend fun getShape(
         @Query("shape_id") shapeID: ShapeID,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<ShapePoint>>
 
     /**
@@ -241,7 +237,7 @@ interface MTDApi {
         @Query("end_stop_id") endStopID: StopID,
         @Query("shape_id") shapeID: ShapeID,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<ShapePoint>>
 
     // Stops
@@ -256,7 +252,7 @@ interface MTDApi {
     suspend fun getStop(
         @Query("stop_id") stopID: StopID,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<Stop>
 
     /**
@@ -269,7 +265,7 @@ interface MTDApi {
     suspend fun getStop(
         @Query("stop_id") stopIDs: IDList<StopID>,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<Stop>>
 
     /**
@@ -285,7 +281,7 @@ interface MTDApi {
     @GET("getstops")
     suspend fun getStops(
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<Stop>>
 
     /**
@@ -304,7 +300,7 @@ interface MTDApi {
         @Query("lon") lon : Double,
         @Query("count") count : Int? = null,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<Stop>>
 
     /**
@@ -323,7 +319,7 @@ interface MTDApi {
     suspend fun getStopTimesByTrip(
         @Query("trip_id") tripID: TripID,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<StopTime>>
 
     /**
@@ -346,7 +342,7 @@ interface MTDApi {
         @Query("route_id") routeID: RouteID? = null,
         @Query("date") date : LocalDate? = null,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<StopTime>>
 
     /**
@@ -363,7 +359,7 @@ interface MTDApi {
         @Query("route_id") routeIDs: IDList<RouteID>?,
         @Query("date") date : LocalDate? = null,
         @Query("changeset_id") changesetID : ChangesetID? = null,
-        @Tag cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.persistent(CacheTTL.LONG)
     ) : MApiResult<List<StopTime>>
 
     // Trip planning
@@ -408,7 +404,7 @@ interface MTDApi {
         @Query("max_walk") maxWalkMiles : Double? = null,
         @Query("minimize") minimize : Minimize? = Minimize.TIME,
         @Query("arrive_depart") arriveDepart : ArriveDepart? = ArriveDepart.DEPART,
-        @Tag cachePolicy: CachePolicy = CachePolicy.none()
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.none()
     ) : MApiResult<List<Itinerary>>
 
     /**
@@ -433,7 +429,7 @@ interface MTDApi {
         @Query("max_walk") maxWalkMiles : Double? = null,
         @Query("minimize") minimize : Minimize? = Minimize.TIME,
         @Query("arrive_depart") arriveDepart : ArriveDepart? = ArriveDepart.DEPART,
-        @Tag cachePolicy: CachePolicy = CachePolicy.none()
+        @Tag("cachePolicy") cachePolicy: CachePolicy = CachePolicy.none()
     ) : MApiResult<List<Itinerary>>
 
     // Trips

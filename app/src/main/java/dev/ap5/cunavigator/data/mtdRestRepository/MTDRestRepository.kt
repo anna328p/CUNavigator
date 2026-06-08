@@ -1,16 +1,15 @@
-package dev.ap5.cunavigator.data.mtd
+package dev.ap5.cunavigator.data.mtdRestRepository
 
-import dev.ap5.cunavigator.data.cache.InMemoryCache
+import dev.ap5.cunavigator.data.mtdRestRepository.cache.InMemoryCache
 import dev.ap5.cunavigator.data.components.MTDApiService
-import dev.ap5.cunavigator.data.cache.PersistentCache
+import dev.ap5.cunavigator.data.mtdRestRepository.cache.PersistentCache
 import dev.ap5.mtdapi.ids.*
 import dev.ap5.mtdapi.rest.misc.IDList
-import dev.ap5.mtdapi.models.*
-import dev.ap5.mtdapi.responses.*
 import dev.ap5.mtdapi.rest.MTDApi
+import dev.ap5.mtdapi.rest.misc.MApiResult
+import dev.ap5.mtdapi.rest.misc.MResult
 import dev.ap5.mtdapi.rest.models.Stop
 import dev.ap5.mtdapi.rest.models.Vehicle
-import dev.ap5.mtdapi.rest.responses.MTDResponseBody
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -18,7 +17,7 @@ import javax.inject.Inject
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
 
-class MTDRepository @Inject constructor(
+class MTDRestRepository @Inject constructor(
     private val apiService : MTDApiService,
     private val inMemoryCache: InMemoryCache,
     private val persistentCache: PersistentCache,
@@ -35,28 +34,14 @@ class MTDRepository @Inject constructor(
 
     private var stopsCache : CacheEntry<List<Stop>, ChangesetID>? = null
 
-    private inline fun wrappedRequest(
-        f : () -> MTDResponseBody
-    ) : MTDResponseBody? {
-        return f()
-        /*
-        val resp = f()
+    private object MTDImpl : MTDApi {
 
-        return when (resp.code()) {
-            200  -> resp.body()!!
-            202  -> null
-            404  -> throw NoSuchElementException(resp.body()!!.status.msg)
-            else -> throw IllegalStateException()
-        }
-
-         */
     }
 
     suspend fun getStop(stopID: StopID) : Stop? {
-        return cachedRequest<Stop?, _>(
+        return cachedRequest<Stop?>(
             fetch = { tag ->
-                val res = wrappedRequest { mtd.getStop(stopID, changesetID = tag) }
-                res?.let { Pair(res.stops!!.firstOrNull(), res.changesetID!!) }
+                mtd.getStop(stopID, changesetID = tag)
             },
             cacheGet = { stopCache[stopID] },
             cachePut = { stop, tag ->
@@ -71,10 +56,7 @@ class MTDRepository @Inject constructor(
 
     suspend fun getStops() : List<Stop> {
         return cachedRequest(
-            fetch = { tag ->
-                val res = wrappedRequest { mtd.getStops(changesetID = tag) }
-                res?.let { Pair(it.stops!!, it.changesetID!!) }
-            },
+            fetch = { tag -> mtd.getStops(changesetID = tag) },
             cacheGet = { stopsCache },
             cachePut = { obj, tag ->
                 stopsCache = CacheEntry(obj, tag, Clock.System.now())
@@ -84,7 +66,11 @@ class MTDRepository @Inject constructor(
     }
 
     suspend fun getVehicle(vehicleID: VehicleID) : Vehicle? {
-        return wrappedRequest { mtd.getVehicle(vehicleID) }!!.vehicles?.firstOrNull()
+        return mtd.getVehicle(vehicleID).unwrap()
+    }
+
+    suspend fun getVehicles() : List<Vehicle> {
+        return mtd.getVehicles().unwrap()
     }
 
     suspend fun getCalendarDatesByDate(date: LocalDate) {
@@ -100,10 +86,10 @@ class MTDRepository @Inject constructor(
      * @param cachePut  Function that stores a new entry in the cache
      * @param ttl       Time-to-live
      */
-    private inline fun <TResult, TTag> cachedRequest(
-        fetch : (TTag?) -> Pair<TResult, TTag>?,
-        cacheGet : () -> CacheEntry<TResult, TTag>?,
-        cachePut : (TResult, TTag) -> Unit,
+    private inline fun <TResult> cachedRequest(
+        fetch : (ChangesetID?) -> MApiResult<TResult>,
+        cacheGet : () -> CacheEntry<TResult, ChangesetID>?,
+        cachePut : (TResult, ChangesetID) -> Unit,
         ttl : Duration
     ) : TResult {
         val entry = cacheGet()
@@ -114,11 +100,14 @@ class MTDRepository @Inject constructor(
         val new = fetch(entry?.tag)
 
         val (obj, tag) = when (entry) {
-            null -> new!!
-            else -> new ?: Pair(entry.obj, entry.tag)
+            null -> new.unwrapChangeset()
+            else -> when (new) {
+                is MResult.NotModified -> Pair(entry.obj, entry.tag)
+                else -> new.unwrapChangeset()
+            }
         }
 
-        cachePut(obj, tag)
+        cachePut(obj, tag!!)
 
         return obj
     }

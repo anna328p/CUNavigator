@@ -1,0 +1,140 @@
+{
+  "manufacturers": {
+    "nfi": {
+      "name": "New Flyer Industries",
+      "url": "https://en.wikipedia.org/wiki/New_Flyer"
+    }
+  },
+
+  "drivetrains": {
+    "DE": {},
+    "HE": {}
+  },
+
+  "models": {
+    "DE40LFR": {
+      "mfg": "nfi",
+      "length": 40,
+      "articulated": false,
+      "drivetrain": "DE"
+    },
+    "XDE40": {
+      "mfg": "nfi",
+      "length": 40,
+      "articulated": false,
+      "drivetrain": "DE"
+    },
+    "XDE60": {
+      "mfg": "nfi",
+      "length": 60,
+      "articulated": true,
+      "drivetrain": "DE"
+    },
+    "XHE40": {
+      "mfg": "nfi",
+      "length": 40,
+      "articulated": false,
+      "drivetrain": "HE"
+    },
+    "XHE60": {
+      "mfg": "nfi",
+      "length": 60,
+      "articulated": true,
+      "drivetrain": "HE"
+    }
+  },
+
+  "ranges": [
+    {
+      "start": "1162", "end": "1197",
+      "mfg": "nfi", "model": "DE40LFR",
+      "build_year": 2011
+    },
+    {
+      "start": "1346", "end": "1355",
+      "mfg": "nfi", "model": "XDE40",
+      "build_year": 2012
+    },
+    {
+      "start": "1601", "end": "1612",
+      "mfg": "nfi", "model": "XDE40",
+      "build_year": 2016
+    },
+    {
+      "start": "1713", "end": "1734",
+      "mfg": "nfi", "model": "XDE40",
+      "build_year": 2017
+    },
+    {
+      "start": "1776", "end": "1776",
+      "mfg": "nfi", "model": "XDE40",
+      "build_year": 2017
+    },
+    {
+      "start": "1835", "end": "1837",
+      "mfg": "nfi", "model": "XDE40",
+      "build_year": 2018
+    },
+    {
+      "start": "1938", "end": "1939",
+      "mfg": "nfi", "model": "XDE40",
+      "build_year": 2019
+    },
+    {
+      "start": "2017", "end": "2022",
+      "mfg": "nfi", "model": "XDE60",
+      "build_year": 2020
+    },
+    {
+      "start": "2040", "end": "2044",
+      "mfg": "nfi", "model": "XDE40",
+      "build_year": 2020
+    },
+    {
+      "start": "2101", "end": "2102",
+      "mfg": "nfi", "model": "XHE60",
+      "build_year": 2021
+    },
+    {
+      "start": "2103", "end": "2105",
+      "mfg": "nfi", "model": "XDE60",
+      "build_year": 2021
+    },
+    {
+      "start": "2145", "end": "2149",
+      "mfg": "nfi", "model": "XDE40",
+      "build_year": 2021
+    },
+    {
+      "start": "2200", "end": "2203",
+      "mfg": "nfi", "model": "XDE40",
+      "build_year": 2023
+    },
+    {
+      "start": "2260", "end": "2263",
+      "mfg": "nfi", "model": "XDE60",
+      "build_year": 2023
+    },
+    {
+      "start": "2304", "end": "2313",
+      "mfg": "nfi", "model": "XHE40",
+      "build_year": 2023
+    },
+    {
+      "start": "2364", "end": "2367",
+      "mfg": "nfi", "model": "XDE60",
+      "build_year": 2023
+    },
+    {
+      "start": "2414", "end": "2439",
+      "mfg": "nfi", "model": "XDE40",
+      "build_year": 2024
+    }
+  ],
+
+  "features": {
+    "usb": {
+      "start_year": 2016
+    }
+  }
+}
