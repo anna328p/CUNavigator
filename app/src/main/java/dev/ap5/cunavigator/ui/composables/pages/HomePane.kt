@@ -111,7 +111,7 @@ fun StopList(stops: List<Pair<Stop, List<Route>>>) {
     Column(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.stopListSpacing))
     ) {
-        stops.forEach { (stop, routes) ->
+        stops.forEach { [stop, routes] ->
             StopListItem(stop, routes)
         }
     }

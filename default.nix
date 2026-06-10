@@ -12,22 +12,22 @@ let
 	composition = androidenv.composeAndroidPackages {
 		includeEmulator = true;
 		includeSystemImages = true;
-		abiVersions = [ "x86_64" "armeabi-v7a" "arm64-v8a" ];
+		abiVersions = [ "x86_64" "arm64-v8a" ];
 		includeNDK = true;
-		platformVersions = [ "34" "35" ];
+		platformVersions = [ "36" "36.1" "latest" ];
 		useGoogleAPIs = true;
-		buildToolsVersions = [ "34.0.0" "35.0.0" ];
+		buildToolsVersions = [ "36.0.0" "36.1.0" "37.0.0" ];
 	};
 
 	sdk = composition.androidsdk;
 
-	studio = androidStudioPackages.stable.withSdk sdk;
+	studio = androidStudioPackages.beta.withSdk sdk;
 
 	jbr_jdk = jetbrains.jdk;
 
 in
 	stdenv.mkDerivation {
-		pname = "TODO";
+		pname = "cu-navigator-env";
 		version = "0";
 
 		nativeBuildInputs = [

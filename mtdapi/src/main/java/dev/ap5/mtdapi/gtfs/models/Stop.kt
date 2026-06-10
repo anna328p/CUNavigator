@@ -4,6 +4,7 @@ import dev.ap5.mtdapi.ids.LevelID
 import dev.ap5.mtdapi.ids.ZoneID
 import dev.ap5.mtdapi.gtfs.models.enums.LocationType
 import dev.ap5.mtdapi.gtfs.models.enums.WheelchairBoarding
+import dev.ap5.mtdapi.gtfs.serializers.TimeZoneSerializer
 import dev.ap5.mtdapi.ids.StopID
 import kotlinx.datetime.TimeZone
 import kotlinx.serialization.SerialName
@@ -91,6 +92,7 @@ data class Stop(
     val parentStationID: StopID? = null,
 
     @SerialName("stop_timezone")
+    @Serializable(with = TimeZoneSerializer::class)
     val timeZone: TimeZone? = null,
 
     @SerialName("wheelchair_boarding")

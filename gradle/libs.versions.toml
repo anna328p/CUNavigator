@@ -1,51 +1,51 @@
 [versions]
 
-kotlin = "2.1.10"
-ksp = "2.1.10-1.0.29"
+kotlin = "2.4.0"
+ksp = "2.3.9"
 javapoet = "1.13.0"
-agp = "8.9.0"
+agp = "9.2.1"
 secrets-gradle-plugin = "2.0.1"
 
-okio = "3.10.2"
+okio = "3.17.0"
 
-ax-core = "1.15.0"
-ktx-datetime = "0.6.2"
-ktx-serialization-json = "1.8.0"
-ktx-serialization-csv = "2.1.0"
+ax-core = "1.19.0"
+ktx-datetime = "0.8.0"
+ktx-serialization-json = "1.11.0"
+ktx-serialization-csv = "3.2.1"
 
 junit = "4.13.2"
-ax-test-ext-junit = "1.2.1"
+ax-test-ext-junit = "1.3.0"
 
 colormath = "3.6.1"
 
-ax-room = "2.7.0-rc02"
-ax-sqlite = "2.5.0-rc02"
+ax-room = "2.8.4"
+ax-sqlite = "2.6.2"
 
-dagger = "2.55"
+dagger = "2.59.2"
 
-ktor = "3.1.1"
-ktorfit = "2.4.0"
+ktor = "3.5.0"
+ktorfit = "2.7.5"
 
-ax-navigation = "2.9.0-alpha08"
-ax-activity-compose = "1.10.1"
-ax-lifecycle = "2.8.7"
+ax-navigation = "2.9.8"
+ax-activity-compose = "1.13.0"
+ax-lifecycle = "2.10.0"
 
-ax-compose-bom = "2025.03.00"
+ax-compose-bom = "2026.05.01"
 
-ax-compose-ui = "1.7.8"
+ax-compose-ui = "1.11.2"
 ax-compose-material = "1.7.8"
-ax-compose-material3 = "1.4.0-alpha10"
+ax-compose-material3 = "1.4.0"
 
-espresso-core = "3.6.1"
+espresso-core = "3.7.0"
 
-play-services-maps = "19.1.0"
-maps-ktx = "5.1.1"
-maps-compose = "6.5.0"
-jetbrains-kotlin-jvm = "2.1.10"
+play-services-maps = "20.0.0"
+maps-ktx = "6.0.1"
+maps-compose = "8.3.0"
+jetbrains-kotlin-jvm = "2.4.0"
 
-slf4j = "2.0.17"
+slf4j = "2.0.18"
 
-rssparser = "6.0.10"
+rssparser = "6.1.5"
 
 [libraries]
 

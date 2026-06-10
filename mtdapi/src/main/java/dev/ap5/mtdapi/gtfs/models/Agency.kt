@@ -1,5 +1,6 @@
 package dev.ap5.mtdapi.gtfs.models
 
+import dev.ap5.mtdapi.gtfs.serializers.TimeZoneSerializer
 import dev.ap5.mtdapi.ids.AgencyID
 import kotlinx.datetime.TimeZone
 import kotlinx.serialization.SerialName
@@ -39,6 +40,7 @@ data class Agency(
     val url : String,
 
     @SerialName("agency_timezone")
+    @Serializable(with = TimeZoneSerializer::class)
     val timeZone : TimeZone,
 
     @SerialName("agency_lang")

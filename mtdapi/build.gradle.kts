@@ -4,22 +4,11 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.jvm)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.serialization)
     alias(libs.plugins.de.jensklingenberg.ktorfit)
-    alias(libs.plugins.androidx.room)
-}
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
-        freeCompilerArgs.add("-Xwhen-guards")
-        extraWarnings.set(true)
-    }
 }
 
-room {
-    schemaDirectory("$projectDir/schemas")
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
@@ -40,10 +29,4 @@ dependencies {
     implementation(libs.ktor.client.logging)
 
     implementation(libs.slf4j.simple)
-
-    implementation(libs.ax.room.runtime)
-    ksp(libs.ax.room.compiler)
-    implementation(libs.ax.room.ktx)
-    implementation(libs.ax.sqlite)
-    implementation(libs.ax.sqlite.bundled)
 }

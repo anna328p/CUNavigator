@@ -34,11 +34,11 @@ fun main() {
         .distinct()
         .map { routeID -> feed.routes.find { it.id == routeID }!! }
         .groupBy { it.id.toString().split(' ').first() }
-        .mapValues { (_, routes) -> routes.sortedBy { it.shortName!!.toInt() } }
+        .mapValues { (value) -> value.sortedBy { it.shortName!!.toInt() } }
 
-    routeGroups.forEach { (key, group) ->
+    routeGroups.forEach { (key, value) ->
         println("$key:")
-        group.forEach { route ->
+        value.forEach { route ->
             println("\t${route.shortName}\t  ${route.longName}")
         }
     }

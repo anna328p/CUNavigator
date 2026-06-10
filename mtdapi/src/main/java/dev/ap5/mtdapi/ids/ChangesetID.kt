@@ -16,6 +16,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 @JvmInline
-value class ChangesetID(private val id : String) : IDType {
-    override fun toString() = id
+value class ChangesetID(val id : String) : IDType {
+	override fun toString() = id
 }
